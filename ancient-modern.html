@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Start Here - Writing</title>
+        <title>Ancient vs. Modern - Writing</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="hello.html">Start Here</a></li><li class="affix"><a href="ancient-modern.html">Ancient vs. Modern</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="hello.html">Start Here</a></li><li class="affix"><a href="ancient-modern.html" class="active">Ancient vs. Modern</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,14 +136,40 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#start-here" id="start-here"><h1>Start Here</h1></a>
-<p>I'm Jarrod. I work at <a href="https://adzerk.com">Adzerk</a>.  I plan to write snippets of things on my mind.</p>
-<p>I've decided to dedicate time to writing, but I refuse to do the chore of learning the latest static blog stuff.  Instead I'll use <code>mdBook</code> and see what happens. It seems to work painlessly and looks good enough. It has a pretty awesome search bar above, so just something in and see what is interesting.</p>
+                        <a class="header" href="#ancient-vs-modern" id="ancient-vs-modern"><h1>Ancient vs. Modern</h1></a>
+<p>This is just an opinion. I'm not trying to get yelled at on twitter.</p>
+<p>I spend a lot of time thinking about whether the code I am writing is optimized for being read or written.  I find that it is much easier to write code than to read it. I have some pretty powerful tools at my disposal. In 2018 most of us have access to extremely powerful languages.</p>
+<p>Yet, I still spend the majority of my time reading and attempting to understand code. The fear of introducing bugs, breaking production systems and ensuring correct behaviour is always in mind.</p>
+<p>Lately I've found that several things are worrying me and I'm not sure what to do about them.</p>
+<blockquote>
+<p>I've become incredibly scared of hash-maps.</p>
+</blockquote>
+<p>I work primarily in <a href="https://clojure.org">Clojure</a>, one of if not the <strong>best dynamic languages</strong> in existence. I also frequently work in <a href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a>, one of if not the <strong>worst dynamic languages</strong> in existence.</p>
+<p>Yet in both of these languages hash-maps are nearly identical because the hash-map is an abstract data type. Granted Clojure provides much better syntax and semantics, as well as immutablity but implementation is not my fear. My fear comes from that fact that computers too are also very powerful. Meaning that if I want to I can create a hashmap that is absolutely GIGANTIC. I can keep adding keys and values until my fingers bleed.</p>
+<p>I'm going to coin the term <strong>hash bombing</strong>. Here is the implementation.</p>
+<pre><code class="language-js">var a_hashmap = {&quot;name&quot;: &quot;Jarrod&quot;};
+
+one(a_hashmap);
+two(a_hashmap);
+three(a_hashmap);
+four(a_hashmap);
+five(a_hashmap);
+</code></pre>
+<p>The final value of <code>a_hashmap</code>? Well... I hash bombed the poor bastards. The map now has 57 keys, 20 of which are nested data structures, likely hash-bombs as well.</p>
+<p>The result is that you now have a very large and complex value with no schema. In addition at any point after the call to <code>five</code> you have to keep this massive context in mind. I know this was a contrived and likely poor example but this sort of thing is not uncommon.</p>
+<a class="header" href="#fighting-fear" id="fighting-fear"><h2>Fighting fear</h2></a>
+<p>Extreme discipline. Gradual typing in dynamic languages. Specific structs in typed languages.</p>
+<a class="header" href="#closing-thought" id="closing-thought"><h2>Closing thought</h2></a>
+<p>A lot of the concepts and ideas in Computer Science were created long before computers developed into the monstrous beasts of power they are today. In other areas of life we often see humans struggle to rectify modern technology with our more ancient genetic origins. I think the same may be true of computing. Modern hardware and ancient concepts may cause more harm than good.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="hello.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
                         
 
                         
@@ -154,6 +180,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="hello.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
                 
 
                 
