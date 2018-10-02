@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Jarrod Writes Here</title>
+        <title>Programming - Jarrod Writes Here</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="hello.html">Start Here</a></li><li><a href="programming.html"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="hello.html">Start Here</a></li><li><a href="programming.html" class="active"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,122 +136,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#hi-im-jarrod" id="hi-im-jarrod"><h1>Hi, I'm Jarrod</h1></a>
-<p>I work at <a href="https://adzerk.com">Adzerk</a>. I write here.</p>
-<p>Instead of comments lets just use <a href="https://twitter.com/jarrodswart">@jarrodswart</a>.</p>
-<p>I've chosen <a href="https://github.com/rust-lang-nursery/mdBook">mdBook</a> as the vehicle for this site because its simple to use and I like the idea of laying information out as a book that can be updated and curated. As opposed to a blog that collects information by date.</p>
-<a class="header" href="#programming" id="programming"><h1>Programming</h1></a>
+                        <a class="header" href="#programming" id="programming"><h1>Programming</h1></a>
 <p>The subsections here all relate to programming in some way, but are not necessarily connected to one another directly.</p>
-<a class="header" href="#estimation" id="estimation"><h1>Estimation</h1></a>
-<blockquote>
-<p>&quot;Most of what we do is R&amp;D.&quot;
--- An Intelligent Coworker</p>
-</blockquote>
-<p>Lately (Fall 2018) our team at work has been working on refining and implementing our engineering process. One of our goals is getting better at estimation, and while there is a lot to say here I found that as an individual estimation remains about as hard as it always has been.</p>
-<p>So I decided to try something odd. I've been experimenting with using <a href="http://bladesinthedark.com">the resolution mechanic from a table top RPG</a> to assist me with estimation.</p>
-<p>In the game any time you roll the dice you first consider two factors: position and effect. <strong>Position</strong> is a statement about your approach to the situation at hand and can be either: controlled, risky or desperate. While <strong>Effect</strong> is a statement about the results and can be: great, standard or limited.</p>
-<p>Our goal as a team is to pick an arbitrary system of estimation, that we can eventually rely on as a team. So if we say that a certain task will be 4 points of effort, and we all agree that 4 points of effort is roughly two days of work and we routinely complete tasks to this estimate then we are on the right track.</p>
-<p>So its all arbitrary but hopefully correct over time.</p>
-<a class="header" href="#getting-approximate" id="getting-approximate"><h2>Getting approximate</h2></a>
-<p>With that in mind I decided to use position and effect to help me with getting better at estimation personally. So what am I doing?</p>
-<p>First we have to come up with some parameters, I've highlighted risky and standard as that is the default position and effect in the game and a good baseline for this purpose as well.</p>
-<p>Position</p>
-<ul>
-<li>Controlled: I have done this exact thing, or something 99% like it before.</li>
-<li><strong>Risky</strong>: I haven't done this before but I know a lot of ways to solve it.</li>
-<li>Desperate: I have not done this before, I do not know how to solve it.</li>
-</ul>
-<p>Effect</p>
-<ul>
-<li>Great: Solving this problem would make or save the entire business a lot of money.</li>
-<li><strong>Standard</strong>: Solving this problem would add substantial value, new functionality or fix a bug.</li>
-<li>Limited: Solving this problem will automate a small task, or provide a quick solution to a small pain point.</li>
-</ul>
-<p>Just like the game this gives us 9 combinations to work with.</p>
-<ul>
-<li>
-<p>Controlled/Great</p>
-</li>
-<li>
-<p>Controlled/Standard</p>
-</li>
-<li>
-<p>Controlled/Limited</p>
-</li>
-<li>
-<p>Risky/Great</p>
-</li>
-<li>
-<p>Risky/Standard</p>
-</li>
-<li>
-<p>Risky/Desperate</p>
-</li>
-<li>
-<p>Desperate/Great</p>
-</li>
-<li>
-<p>Desperate/Standard</p>
-</li>
-<li>
-<p>Desperate/Limited</p>
-</li>
-</ul>
-<a class="header" href="#lets-try-it" id="lets-try-it"><h2>Let's try it!</h2></a>
-<ul>
-<li>&quot;We need you to install Wordpress and point a  new domain at it.&quot;
-<ul>
-<li>Controlled/Standard</li>
-<li>I've done this before, many times.</li>
-</ul>
-</li>
-<li>&quot;The production Postgres database is deadlocking and we need to figure out why.&quot;
-<ul>
-<li>Controlled/Standard
-<ul>
-<li>Identifying the source of deadlocking. I've done this before, but this really only applies to the method of identifying the deadlocks, not the solution.</li>
-</ul>
-</li>
-<li>Risky/Standard
-<ul>
-<li>Solving the deadlocks. I've done it, but not very often. This case could be unique.</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>&quot;We need to process customer data and apply Machine Learning to gather insights.&quot;
-<ul>
-<li>Desperate/Great
-<ul>
-<li>I have no idea how to this at this moment and it seems like it could add A LOT of value to the business.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<a class="header" href="#so-what-have-we-done-here" id="so-what-have-we-done-here"><h2>So what have we done here?</h2></a>
-<p>This process adds a new dimension to estimation that I wasn't considering previously: <strong>my potential aptitude at creating a good estimate</strong>. Often when attempting to estimate I look first at the task, then at the choices available for creating that estimate and pick a number.</p>
-<p>The old process was:</p>
-<ol>
-<li>Look at task.</li>
-<li>Look at estimation scale/points/units.</li>
-<li>Pick a unit to fit this task.</li>
-</ol>
-<p>The new process is:</p>
-<ol>
-<li>Look at task.</li>
-<li>Assess task using Position/Effect.</li>
-<li>Look at estimation scale/points/units.</li>
-<li>Pick a unit, based on my Postion/Effect to fit this task.</li>
-</ol>
-<p>The goal being that in forcing self-awareness of the situation and task while attempting to estimate I can hopefully create better estimates.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="hello.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="estimation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -261,7 +162,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="hello.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a href="estimation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
@@ -286,14 +195,6 @@
         <!-- Custom JS scripts -->
         
 
-        
-        
-        <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
-        
         
 
     </body>
