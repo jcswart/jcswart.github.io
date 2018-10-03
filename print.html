@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="hello.html">Start Here</a></li><li><a href="programming.html"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="hello.html">Start Here</a></li><li><a href="programming.html"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li><li><a href="naming.html"><strong aria-hidden="true">1.2.</strong> Naming</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -245,6 +245,33 @@
 <li>Pick a unit, based on my Postion/Effect to fit this task.</li>
 </ol>
 <p>The goal being that in forcing self-awareness of the situation and task while attempting to estimate I can hopefully create better estimates.</p>
+<a class="header" href="#naming" id="naming"><h1>Naming</h1></a>
+<blockquote>
+<p>There are only two hard things in Computer Science: cache invalidation and naming things. -- Phil Karlton</p>
+</blockquote>
+<p>There seem to be two breeds of thought on naming in software: literal and captivating. I think that <em>literal</em> speaks for itself but the idea of a <em>captivating</em> name is that it invokes the imagination to associate something unique with an abstract idea.</p>
+<p>An illustrated example is a discussion between several of my coworkers, debating what to name a reporting service. For context my company has a long history of naming large projects after Norse gods.</p>
+<p>&quot;What about Hel?&quot;, proposed John. &quot;Hel? What does that mean? We should call it Metric Reporting Service.&quot;, Steve suggests as a counter example. Steve had a long history of proposing literal names and absolutely abhorring the Norse god naming scheme. &quot;You know,.. I bet Steve named his dog 'Outside Poop Machine'.&quot;, retorts John.</p>
+<p>It was at this time that we all burst into laughter.</p>
+<a class="header" href="#point-counter-point" id="point-counter-point"><h2>Point, Counter-point</h2></a>
+<p>I've found that I enjoy a more captivating and abstract name for larger projects. In the same way that people name conference rooms, a unique name helps solidify and captivate the imagination around an otherwise mundane or ordinary thing. There are limitations though and over time I've found that as the number of captivating names increases the value is lost. Perhaps this was Steve's point all along. As the newest memeber to the team he was introduced to a long list of abstract names.</p>
+<ul>
+<li>Thor</li>
+<li>Hel</li>
+<li>Loki</li>
+<li>Rattoskr</li>
+<li>Odin</li>
+</ul>
+<p>... and so on. Being presented with so many abstract names they lose the sense of captivation. Whereas the rest of the team had to opportunity to slowly grow the list, picking some of the names themselves. After a while though, as a service is finished and runs in production much of the team, especially if they didn't name or work on the project directly will lose the captivating association as well. <em>At this point, the literal name has the advantage.</em></p>
+<a class="header" href="#literal" id="literal"><h3>Lit.eral</h3></a>
+<p>The aspect of literal naming that fails for me personally is when something's description doesn't designate what makes it different.</p>
+<p>An example:</p>
+<pre><code>    var logProperties = util.getProperties(data)
+</code></pre>
+<p>This is a contrived example but there are a range of words used in programming that I think have lost their meaning: log, data, build(er), config, properties, object, obj, and the list goes on. There is a point where literal descriptions fall back into the same pattern as that of the captivating scheme, meaning is lost.</p>
+<a class="header" href="#solutions" id="solutions"><h2>Solutions?</h2></a>
+<p>I have no idea, naming is still hard. Perhaps like estimation, multiple vectors could be used to generate better names or using a thesaurus on really important items.</p>
+<p>Alternatively there is a chance that there is no solution at all and naming will simply be hard to get right. Or its only when we get rid of names entirely (lambdas, declarative systems) that the problem can be solved through avoiding it all together.</p>
 
                     </main>
 
