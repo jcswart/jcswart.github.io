@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Start Here - Jarrod Writes Here</title>
+        <title>AWS Security Groups - Jarrod Writes Here</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="index.html">Start Here</a></li><li><a href="programming.html"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li><li><a href="naming.html"><strong aria-hidden="true">1.2.</strong> Naming</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">2.</strong> Testing</a></li><li><ol class="section"><li><a href="localstack.html"><strong aria-hidden="true">2.1.</strong> Localstack (mocking AWS)</a></li></ol></li><li><a href="notes.html"><strong aria-hidden="true">3.</strong> Notes</a></li><li><ol class="section"><li><a href="ddb-attributedefinitions.html"><strong aria-hidden="true">3.1.</strong> Dynamo Attribute Defintions</a></li><li><a href="aws-security-groups.html"><strong aria-hidden="true">3.2.</strong> AWS Security Groups</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="index.html">Start Here</a></li><li><a href="programming.html"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li><li><a href="naming.html"><strong aria-hidden="true">1.2.</strong> Naming</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">2.</strong> Testing</a></li><li><ol class="section"><li><a href="localstack.html"><strong aria-hidden="true">2.1.</strong> Localstack (mocking AWS)</a></li></ol></li><li><a href="notes.html"><strong aria-hidden="true">3.</strong> Notes</a></li><li><ol class="section"><li><a href="ddb-attributedefinitions.html"><strong aria-hidden="true">3.1.</strong> Dynamo Attribute Defintions</a></li><li><a href="aws-security-groups.html" class="active"><strong aria-hidden="true">3.2.</strong> AWS Security Groups</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,16 +136,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><img width=230 height=230 src="https://avatars0.githubusercontent.com/u/1610469?s=460&v=4" alt="Jarrod's face."></p>
-<a class="header" href="#hi-im-jarrod" id="hi-im-jarrod"><h1>Hi, I'm Jarrod</h1></a>
-<p>I work at <a href="https://adzerk.com">Adzerk</a>. I write here.</p>
-<p>Instead of comments lets just use <a href="https://twitter.com/jarrodswart">@jarrodswart</a>.</p>
-<p>I've chosen <a href="https://github.com/rust-lang-nursery/mdBook">mdBook</a> as the vehicle for this site because its simple to use and I like the idea of laying information out as a book that can be updated and curated. As opposed to a blog that collects information by date.</p>
+                        <a class="header" href="#til-aws-security-groups" id="til-aws-security-groups"><h1>TIL: AWS Security Groups</h1></a>
+<p>Today while I was struggling with getting an EC2 instance to be able to communicate with an RDS Aurora cluster, my coworker Craig Andera taught me a something very useful about AWS Security Groups.</p>
+<p>They can be thought of as two things:</p>
+<ol>
+<li>An identity</li>
+<li>A container for rules.</li>
+</ol>
+<p>This first aspect was completely missing from my mental model.</p>
+<p>In my mind, and through AWS, I was attempting to create the following.</p>
+<pre><code>EC2 Instance &lt;--- The Security Group ---&gt;  DB Cluster
+</code></pre>
+<p>Where <strong>The Security Group</strong> was simply a set of rules, a mapping of ports. The in/outbound 5432 ports open, and yet it wasn't working. And this is of course where the missing element of <strong>identity</strong> came into play. I wasn't specifying <strong>who</strong> was allowed to connect on those ports only <em>how</em> they were allowed to connect.</p>
+<p>The answer was to create an additional SG for just the EC2 machine and then use this to specify both who, and how the machine would connect to the DB Cluster.</p>
+<p>With this I have created a new mental model.</p>
+<pre><code>EC2 Instance (as SG-1234) &lt;---&gt; DB Cluster (allowing: SG-1234 on port 5432)
+</code></pre>
+<p>I now understand that I need to specify <strong>who</strong> is connecting and not just <strong>how</strong>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ddb-attributedefinitions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
                         
 
                         
@@ -156,6 +172,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="ddb-attributedefinitions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
                 
 
                 

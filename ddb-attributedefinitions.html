@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Start Here - Jarrod Writes Here</title>
+        <title>Dynamo Attribute Defintions - Jarrod Writes Here</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="index.html">Start Here</a></li><li><a href="programming.html"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li><li><a href="naming.html"><strong aria-hidden="true">1.2.</strong> Naming</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">2.</strong> Testing</a></li><li><ol class="section"><li><a href="localstack.html"><strong aria-hidden="true">2.1.</strong> Localstack (mocking AWS)</a></li></ol></li><li><a href="notes.html"><strong aria-hidden="true">3.</strong> Notes</a></li><li><ol class="section"><li><a href="ddb-attributedefinitions.html"><strong aria-hidden="true">3.1.</strong> Dynamo Attribute Defintions</a></li><li><a href="aws-security-groups.html"><strong aria-hidden="true">3.2.</strong> AWS Security Groups</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="index.html">Start Here</a></li><li><a href="programming.html"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li><li><a href="naming.html"><strong aria-hidden="true">1.2.</strong> Naming</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">2.</strong> Testing</a></li><li><ol class="section"><li><a href="localstack.html"><strong aria-hidden="true">2.1.</strong> Localstack (mocking AWS)</a></li></ol></li><li><a href="notes.html"><strong aria-hidden="true">3.</strong> Notes</a></li><li><ol class="section"><li><a href="ddb-attributedefinitions.html" class="active"><strong aria-hidden="true">3.1.</strong> Dynamo Attribute Defintions</a></li><li><a href="aws-security-groups.html"><strong aria-hidden="true">3.2.</strong> AWS Security Groups</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,18 +136,33 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><img width=230 height=230 src="https://avatars0.githubusercontent.com/u/1610469?s=460&v=4" alt="Jarrod's face."></p>
-<a class="header" href="#hi-im-jarrod" id="hi-im-jarrod"><h1>Hi, I'm Jarrod</h1></a>
-<p>I work at <a href="https://adzerk.com">Adzerk</a>. I write here.</p>
-<p>Instead of comments lets just use <a href="https://twitter.com/jarrodswart">@jarrodswart</a>.</p>
-<p>I've chosen <a href="https://github.com/rust-lang-nursery/mdBook">mdBook</a> as the vehicle for this site because its simple to use and I like the idea of laying information out as a book that can be updated and curated. As opposed to a blog that collects information by date.</p>
+                        <a class="header" href="#dynamodb-attribute-definitions" id="dynamodb-attribute-definitions"><h1>DynamoDB Attribute Definitions</h1></a>
+<p>This always trips me up so I'm writing it down, I hope this commits it to memory.</p>
+<pre><code>AttributeDefinitions = KeySchema + Indexes
+</code></pre>
+<p>So if the table has a KeySchema of <code>{KeyType: &quot;HASH&quot;, AttributeName: &quot;my_primarykey&quot;}</code> and an global secondary index named <code>{KeyType: HASH, AttributeName: &quot;my_index&quot;}</code> then you simple add these into the AttributeDefinition and give their type. Like the following.</p>
+<pre><code class="language-yaml">AttributeDefinitions:
+    - AttributeName: &quot;my_primarykey&quot;
+      AttributeType: S
+    - AttributeName: &quot;my_index&quot;
+      AttributeType: S
+</code></pre>
+<p>Very simple. It says this pretty much verbatim in the docks and yet I always spend five minutes futzing with it. No more!</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="notes.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="aws-security-groups.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -157,7 +172,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="notes.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a href="aws-security-groups.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 

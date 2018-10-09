@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="index.html">Start Here</a></li><li><a href="testing.html"><strong aria-hidden="true">1.</strong> Testing</a></li><li><ol class="section"><li><a href="localstack.html"><strong aria-hidden="true">1.1.</strong> Localstack (mocking AWS)</a></li></ol></li><li><a href="programming.html"><strong aria-hidden="true">2.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">2.1.</strong> Estimation</a></li><li><a href="naming.html"><strong aria-hidden="true">2.2.</strong> Naming</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="index.html">Start Here</a></li><li><a href="programming.html"><strong aria-hidden="true">1.</strong> Programming</a></li><li><ol class="section"><li><a href="estimation.html"><strong aria-hidden="true">1.1.</strong> Estimation</a></li><li><a href="naming.html"><strong aria-hidden="true">1.2.</strong> Naming</a></li></ol></li><li><a href="testing.html"><strong aria-hidden="true">2.</strong> Testing</a></li><li><ol class="section"><li><a href="localstack.html"><strong aria-hidden="true">2.1.</strong> Localstack (mocking AWS)</a></li></ol></li><li><a href="notes.html"><strong aria-hidden="true">3.</strong> Notes</a></li><li><ol class="section"><li><a href="ddb-attributedefinitions.html"><strong aria-hidden="true">3.1.</strong> Dynamo Attribute Defintions</a></li><li><a href="aws-security-groups.html"><strong aria-hidden="true">3.2.</strong> AWS Security Groups</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -141,63 +141,6 @@
 <p>I work at <a href="https://adzerk.com">Adzerk</a>. I write here.</p>
 <p>Instead of comments lets just use <a href="https://twitter.com/jarrodswart">@jarrodswart</a>.</p>
 <p>I've chosen <a href="https://github.com/rust-lang-nursery/mdBook">mdBook</a> as the vehicle for this site because its simple to use and I like the idea of laying information out as a book that can be updated and curated. As opposed to a blog that collects information by date.</p>
-<a class="header" href="#testing" id="testing"><h1>Testing</h1></a>
-<a class="header" href="#localstack-mocking-aws" id="localstack-mocking-aws"><h1>Localstack (mocking AWS)</h1></a>
-<p>When it comes to production or production-adjacent work, I have a debilitating amount of fear. Early on in my career I accidently deleted the entire MySQL database containing about 90 customer's worth of data. Luckily I had a 15 minute old backup, otherwise I probably would have been fired.  The terror I felt as my boss screamed from the next room, when our app wasn't loading was heavy. The next day I made read-only credentials.</p>
-<p>Since then, I don't mess around.</p>
-<p>But at times this fear can prevent me from actually getting work done. At my current company our services live on AWS and I've found two tools that help ease this fear:</p>
-<ol>
-<li>Localstack</li>
-<li>Cloud Formation</li>
-</ol>
-<p>This post is about a simple way to get started with Localstack. Perhaps I'll discuss the other in a future post.</p>
-<a class="header" href="#setting-up-localstack" id="setting-up-localstack"><h2>Setting up Localstack</h2></a>
-<p>Localstack is a docker container that mocks AWS. I've been using it during development and I greatly enjoy being able to develop and experiment without having to worry about touching actual infrastructure. Working in this manner involves docker.</p>
-<p>Lets create a simple development environment with:</p>
-<ol>
-<li>Our application</li>
-<li>Postgres</li>
-<li>Localstack</li>
-</ol>
-<p>Each of these will be run in their own docker containers.</p>
-<a class="header" href="#your-app" id="your-app"><h3>Your app</h3></a>
-<p>You need a minimal setup to get your application code in a container. This will vary from application to application. Whatever you end up doing: give the container a good name.</p>
-<a class="header" href="#the-rest" id="the-rest"><h3>The rest</h3></a>
-<p>We don't actually need to acquire the other containers, they are in the dockerhub cloud. Instead we need to create a script that will run our app and link everything together. I use the following.</p>
-<p>You will of course need to tweak instances of <code>my-app</code> to get this script to work. Its meant as an example not a literal template.</p>
-<pre><code class="language-bash">#!/bin/bash
-
-trap &quot;docker stop postgres-$USER localstack-$USER&quot; EXIT
-
-docker run \
-    --name localstack-$USER \
-    -e SERVICES='s3,dynamodb' \
-    -e HOSTNAME_EXTERNAL='localstack' \
-    --rm -d localstack/localstack
-
-docker run \
-    --name postgres-$USER \
-    -e POSTGRES_PASSWORD=1337h4ck35 \
-    --rm -d postgres:9.6 \-c 'log_destination=stderr' \-c 'logging_collector=on' \-c 'log_directory=pg_log' \-c 'log_filename=postgresql-%Y-%m-%d_%H%M%S.log'
-
-docker run \
-    --name myapp-$USER \
-    --link postgres-$USER:postgres \
-    --link localstack-$USER:localstack \
-    -v &quot;$PWD:/my-app&quot; \
-    -e USER_HOME=$HOME \
-    -e USER_NAME=$USER \
-    -e AWS_DEFAULT_REGION=us-east-1 \
-    -e AWS_ACCESS_KEY_ID=abc \
-    -e AWS_SECRET_ACCESS_KEY=def \
-    -e LOCALSTACK_HOST='localstack' \
-    --rm -ti myapp-$USER
-</code></pre>
-<p>Then set execution permissions: <code>$ chmod +x run-myapp-docer</code> and start it up: <code>$ cd my-app &amp;&amp; ./run-myapp-docker</code>.</p>
-<p>The key thing is the use of <code>--link</code> which ties our application to the Postgres and Localstack containers. Though <code>--link</code> is considered deprecated and the docker project recommends moving to <code>docker compose</code> I have not found a need to do so personally. Your results may vary.</p>
-<p>Within our app container <code>postgres</code> is the hostname we would use to refer to our DB and <code>localstack</code> for AWS.</p>
-<p>The final piece is getting this to work is setting the AWS endpoints. The localstack repo has a list of the various endpoints you would need to use as well as the general information on how to get started.</p>
-<p>Overall I find this to be a really nice way to start developing a service that is going to live in AWS, while keeping everything local and under more simple control.</p>
 <a class="header" href="#programming" id="programming"><h1>Programming</h1></a>
 <p>The subsections here all relate to programming in some way, but are not necessarily connected to one another directly.</p>
 <a class="header" href="#estimation" id="estimation"><h1>Estimation</h1></a>
@@ -330,6 +273,93 @@ docker run \
 <a class="header" href="#solutions" id="solutions"><h2>Solutions?</h2></a>
 <p>I have no idea, naming is still hard. Perhaps like estimation, multiple vectors could be used to generate better names or using a thesaurus on really important items.</p>
 <p>Alternatively there is a chance that there is no solution at all and naming will simply be hard to get right. Or its only when we get rid of names entirely (lambdas, declarative systems) that the problem can be solved through avoiding it all together.</p>
+<a class="header" href="#testing" id="testing"><h1>Testing</h1></a>
+<a class="header" href="#localstack-mocking-aws" id="localstack-mocking-aws"><h1>Localstack (mocking AWS)</h1></a>
+<p>When it comes to production or production-adjacent work, I have a debilitating amount of fear. Early on in my career I accidently deleted the entire MySQL database containing about 90 customer's worth of data. Luckily I had a 15 minute old backup, otherwise I probably would have been fired.  The terror I felt as my boss screamed from the next room, when our app wasn't loading was heavy. The next day I made read-only credentials.</p>
+<p>Since then, I don't mess around.</p>
+<p>But at times this fear can prevent me from actually getting work done. At my current company our services live on AWS and I've found two tools that help ease this fear:</p>
+<ol>
+<li>Localstack</li>
+<li>Cloud Formation</li>
+</ol>
+<p>This post is about a simple way to get started with Localstack. Perhaps I'll discuss the other in a future post.</p>
+<a class="header" href="#setting-up-localstack" id="setting-up-localstack"><h2>Setting up Localstack</h2></a>
+<p>Localstack is a docker container that mocks AWS. I've been using it during development and I greatly enjoy being able to develop and experiment without having to worry about touching actual infrastructure. Working in this manner involves docker.</p>
+<p>Lets create a simple development environment with:</p>
+<ol>
+<li>Our application</li>
+<li>Postgres</li>
+<li>Localstack</li>
+</ol>
+<p>Each of these will be run in their own docker containers.</p>
+<a class="header" href="#your-app" id="your-app"><h3>Your app</h3></a>
+<p>You need a minimal setup to get your application code in a container. This will vary from application to application. Whatever you end up doing: give the container a good name.</p>
+<a class="header" href="#the-rest" id="the-rest"><h3>The rest</h3></a>
+<p>We don't actually need to acquire the other containers, they are in the dockerhub cloud. Instead we need to create a script that will run our app and link everything together. I use the following.</p>
+<p>You will of course need to tweak instances of <code>my-app</code> to get this script to work. Its meant as an example not a literal template.</p>
+<pre><code class="language-bash">#!/bin/bash
+
+trap &quot;docker stop postgres-$USER localstack-$USER&quot; EXIT
+
+docker run \
+    --name localstack-$USER \
+    -e SERVICES='s3,dynamodb' \
+    -e HOSTNAME_EXTERNAL='localstack' \
+    --rm -d localstack/localstack
+
+docker run \
+    --name postgres-$USER \
+    -e POSTGRES_PASSWORD=1337h4ck35 \
+    --rm -d postgres:9.6 \-c 'log_destination=stderr' \-c 'logging_collector=on' \-c 'log_directory=pg_log' \-c 'log_filename=postgresql-%Y-%m-%d_%H%M%S.log'
+
+docker run \
+    --name myapp-$USER \
+    --link postgres-$USER:postgres \
+    --link localstack-$USER:localstack \
+    -v &quot;$PWD:/my-app&quot; \
+    -e USER_HOME=$HOME \
+    -e USER_NAME=$USER \
+    -e AWS_DEFAULT_REGION=us-east-1 \
+    -e AWS_ACCESS_KEY_ID=abc \
+    -e AWS_SECRET_ACCESS_KEY=def \
+    -e LOCALSTACK_HOST='localstack' \
+    --rm -ti myapp-$USER
+</code></pre>
+<p>Then set execution permissions: <code>$ chmod +x run-myapp-docer</code> and start it up: <code>$ cd my-app &amp;&amp; ./run-myapp-docker</code>.</p>
+<p>The key thing is the use of <code>--link</code> which ties our application to the Postgres and Localstack containers. Though <code>--link</code> is considered deprecated and the docker project recommends moving to <code>docker compose</code> I have not found a need to do so personally. Your results may vary.</p>
+<p>Within our app container <code>postgres</code> is the hostname we would use to refer to our DB and <code>localstack</code> for AWS.</p>
+<p>The final piece is getting this to work is setting the AWS endpoints. The localstack repo has a list of the various endpoints you would need to use as well as the general information on how to get started.</p>
+<p>Overall I find this to be a really nice way to start developing a service that is going to live in AWS, while keeping everything local and under more simple control.</p>
+<a class="header" href="#notes" id="notes"><h1>Notes</h1></a>
+<a class="header" href="#dynamodb-attribute-definitions" id="dynamodb-attribute-definitions"><h1>DynamoDB Attribute Definitions</h1></a>
+<p>This always trips me up so I'm writing it down, I hope this commits it to memory.</p>
+<pre><code>AttributeDefinitions = KeySchema + Indexes
+</code></pre>
+<p>So if the table has a KeySchema of <code>{KeyType: &quot;HASH&quot;, AttributeName: &quot;my_primarykey&quot;}</code> and an global secondary index named <code>{KeyType: HASH, AttributeName: &quot;my_index&quot;}</code> then you simple add these into the AttributeDefinition and give their type. Like the following.</p>
+<pre><code class="language-yaml">AttributeDefinitions:
+    - AttributeName: &quot;my_primarykey&quot;
+      AttributeType: S
+    - AttributeName: &quot;my_index&quot;
+      AttributeType: S
+</code></pre>
+<p>Very simple. It says this pretty much verbatim in the docks and yet I always spend five minutes futzing with it. No more!</p>
+<a class="header" href="#til-aws-security-groups" id="til-aws-security-groups"><h1>TIL: AWS Security Groups</h1></a>
+<p>Today while I was struggling with getting an EC2 instance to be able to communicate with an RDS Aurora cluster, my coworker Craig Andera taught me a something very useful about AWS Security Groups.</p>
+<p>They can be thought of as two things:</p>
+<ol>
+<li>An identity</li>
+<li>A container for rules.</li>
+</ol>
+<p>This first aspect was completely missing from my mental model.</p>
+<p>In my mind, and through AWS, I was attempting to create the following.</p>
+<pre><code>EC2 Instance &lt;--- The Security Group ---&gt;  DB Cluster
+</code></pre>
+<p>Where <strong>The Security Group</strong> was simply a set of rules, a mapping of ports. The in/outbound 5432 ports open, and yet it wasn't working. And this is of course where the missing element of <strong>identity</strong> came into play. I wasn't specifying <strong>who</strong> was allowed to connect on those ports only <em>how</em> they were allowed to connect.</p>
+<p>The answer was to create an additional SG for just the EC2 machine and then use this to specify both who, and how the machine would connect to the DB Cluster.</p>
+<p>With this I have created a new mental model.</p>
+<pre><code>EC2 Instance (as SG-1234) &lt;---&gt; DB Cluster (allowing: SG-1234 on port 5432)
+</code></pre>
+<p>I now understand that I need to specify <strong>who</strong> is connecting and not just <strong>how</strong>.</p>
 
                     </main>
 
