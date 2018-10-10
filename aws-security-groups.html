@@ -150,7 +150,11 @@
 <p>Where <strong>The Security Group</strong> was simply a set of rules, a mapping of ports. The in/outbound 5432 ports open, and yet it wasn't working. And this is of course where the missing element of <strong>identity</strong> came into play. I wasn't specifying <strong>who</strong> was allowed to connect on those ports only <em>how</em> they were allowed to connect.</p>
 <p>The answer was to create an additional SG for just the EC2 machine and then use this to specify both who, and how the machine would connect to the DB Cluster.</p>
 <p>With this I have created a new mental model.</p>
-<pre><code>EC2 Instance (as SG-1234) &lt;---&gt; DB Cluster (allowing: SG-1234 on port 5432)
+<pre><code>EC2 Instance (as SG-1234)
+   ^
+   |
+   \
+    -&gt; DB Cluster (allowing: SG-1234 on port 5432)
 </code></pre>
 <p>I now understand that I need to specify <strong>who</strong> is connecting and not just <strong>how</strong>.</p>
 
